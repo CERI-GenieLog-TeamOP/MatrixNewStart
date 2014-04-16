@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1397647887 source:c:\users\jarvan\documents\github\matrixnewstart\main.cpp
+	"Matrix.h"
+	<iostream>
+
+1397647887 c:\users\jarvan\documents\github\matrixnewstart\matrix.h
+	<iostream>
+	<string.h>
+	<fstream>
+	<stdlib.h>
+
+1397649014 source:c:\users\jarvan\documents\github\matrixnewstart\matrix.cpp
+	"Matrix.h"
+

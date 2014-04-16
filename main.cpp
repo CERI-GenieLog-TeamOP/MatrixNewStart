@@ -3,8 +3,8 @@
 
 using namespace std;
 
-void main ()
+int main ()
 {
-    Matrice m = new Matrice(toto.txt);
-    m.print();
+    Matrix m1("mtest1.txt");
+    m1.afficher();
 }
