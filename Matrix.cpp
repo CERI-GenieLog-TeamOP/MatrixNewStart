@@ -10,7 +10,7 @@ Matrix::Matrix (string fichier)
 
     ifstream maMatrice (matrice.c_str());
 
-    maMatrice.seekg(0, ios::end);
+    maMatrice.seekg(0, ios::beg);
     nLigne >> maMatrice;
     nColonne >> maMatrice;
 }
@@ -27,4 +27,9 @@ int Matrix::readLine (string ligne)
     ligne << tampon << res;
 
     return atoi(res.c_str());
+}
+
+void Matrix::print()
+{
+    cout<<"La matrice du fichier "<<matrice<<" comporte "<<nLigne<<" lignes et "<<NColonne<<" colonnes."<<endl;
 }
