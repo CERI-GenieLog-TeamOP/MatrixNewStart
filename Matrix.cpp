@@ -41,7 +41,7 @@ int Matrix::get(int l, int c)
     do
     {
         getline(m,ligne);
-    }while(getL(ligne)<=l && getC(ligne)!=c);
+    }while( (getL(ligne)<l || (getL(ligne)==l && getC(ligne)!=c)) && !m.eof());
 
     if(getL(ligne)!=l || getC(ligne)!=c) return 0;
     else return getV(ligne);
