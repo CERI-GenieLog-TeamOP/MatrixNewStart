@@ -1,18 +1,16 @@
-#include <iostream>
 #include "Matrix.h"
-#include <fstream>
 
 using namespace std;
 
-Matrix::Matrix (string fichier)
+Matrix::Matrix (char * fichier)
 {
     matrice = fichier;
 
-    ifstream maMatrice (matrice.c_str());
-
-    maMatrice.seekg(0, ios::end);
-    nLigne >> maMatrice;
-    nColonne >> maMatrice;
+    ifstream m (matrice,ifstream::in);
+    string ligne;
+    getline(m,ligne);
+    nLigne=atoi((ligne.substr(0,ligne.find_first_of(' ')).c_str()));
+    nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
 }
 /*
 bool Matrix::produit(Matrix M1, Matrix M2)
@@ -20,11 +18,49 @@ bool Matrix::produit(Matrix M1, Matrix M2)
 
 }
 */
-int Matrix::readLine (string ligne)
+
+void Matrix::afficher() //pour test petites matrices uniquement
 {
-    string tampon, string res;
+    cout<<"Debut affichage de matrice "<<nLigne<<"*"<<nColonne<<endl;
+    for(int i_l=0;i_l<nLigne;i_l++)
+    {
+        for(int i_c=0;i_c<nColonne;i_c++)
+        {
+            cout<<get(i_l,i_c)<<' ';
+        }
+        cout<<endl;
+    }
+}
 
-    ligne << tampon << res;
+int Matrix::get(int l, int c)
+{
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne); // saut de la ligne contenant les dimensions de la matrice
 
-    return atoi(res.c_str());
+    do
+    {
+        getline(m,ligne);
+    }while(getL(ligne)<=l && getC(ligne)!=c);
+
+    if(getL(ligne)!=l || getC(ligne)!=c) return 0;
+    else return getV(ligne);
+}
+
+int Matrix::getL(string ligne)
+{
+    string l=ligne.substr(0,ligne.find_first_of(' '));
+    return atoi(l.c_str());
+}
+
+int Matrix::getC(string ligne)
+{
+    string c=ligne.substr(ligne.find_first_of(' ')+1,ligne.find_last_of(' ')-ligne.find_first_of(' ')-1);
+    return atoi(c.c_str());
+}
+
+int Matrix::getV(string ligne)
+{
+    string v=ligne.substr(ligne.find_last_of(' ')+1,string::npos);
+    return atoi(v.c_str());
 }
