@@ -59,7 +59,7 @@ int Matrix::getV(string ligne)
     return atoi(v.c_str());
 }
 
-void Matrix::setV(string &ligne, int V)
+void Matrix::setV(string &ligne, int V) //change la valeur d'une ligne, qui devient V
 {
     string new_ligne=ligne.substr(0,ligne.find_last_of(' ')+1);
     stringstream ss;
