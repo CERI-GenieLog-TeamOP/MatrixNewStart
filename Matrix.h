@@ -2,8 +2,9 @@
 #define MATRIX_H
 
 #include <iostream>
-#include <string.h>
+#include <string>
 #include <fstream>
+#include <sstream>
 #include <stdlib.h>
 
 using namespace std;
@@ -17,11 +18,15 @@ class Matrix
 public:
     Matrix(char * fichier);
     void afficher();
-    int get(int x, int y);
+    int get(int l, int c);
     int getL(string ligne);
     int getC(string ligne);
     int getV(string ligne);
-    bool produit(string M1, string M2);
+    void setV(string &ligne, int V);
+
+    //Matrix *produit(int a);
+    Matrix operator+(const int &a);
+
 };
 
 #endif // MATRIX_H

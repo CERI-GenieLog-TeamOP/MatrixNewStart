@@ -32,7 +32,7 @@ void Matrix::afficher() //pour test petites matrices uniquement
     }
 }
 
-int Matrix::get(int l, int c)
+int Matrix::get(int c, int l)
 {
     ifstream m(matrice);
     string ligne;
@@ -41,10 +41,14 @@ int Matrix::get(int l, int c)
     do
     {
         getline(m,ligne);
-    }while( (getL(ligne)<l || (getL(ligne)==l && getC(ligne)!=c)) && !m.eof());
+    }while( (getL(ligne)<l || (getL(ligne)==l && getC(ligne)<c)) && !m.eof());
 
     if(getL(ligne)!=l || getC(ligne)!=c) return 0;
-    else return getV(ligne);
+    else
+    {
+        setV(ligne,getV(ligne)+1);
+        return getV(ligne);
+    }
 }
 
 int Matrix::getL(string ligne)
@@ -63,4 +67,13 @@ int Matrix::getV(string ligne)
 {
     string v=ligne.substr(ligne.find_last_of(' ')+1,string::npos);
     return atoi(v.c_str());
+}
+
+void Matrix::setV(string &ligne, int V)
+{
+    string new_ligne=ligne.substr(0,ligne.find_last_of(' ')+1);
+    stringstream ss;
+    ss<<V;
+    new_ligne+=ss.str();
+    ligne=new_ligne;
 }
