@@ -24,8 +24,11 @@ public:
     int getV(string ligne);
     void setV(string &ligne, int V);
 
+    void produit(int a, char *new_fichier);
+    void produit(int a);
+
     //Matrix *produit(int a);
-    Matrix operator+(const int &a);
+    //Matrix operator*(const int &a);
 
 };
 

@@ -12,12 +12,6 @@ Matrix::Matrix (char * fichier)
     nLigne=atoi((ligne.substr(0,ligne.find_first_of(' ')).c_str()));
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
 }
-/*
-bool Matrix::produit(Matrix M1, Matrix M2)
-{
-
-}
-*/
 
 void Matrix::afficher() //pour test petites matrices uniquement
 {
@@ -73,3 +67,54 @@ void Matrix::setV(string &ligne, int V)
     new_ligne+=ss.str();
     ligne=new_ligne;
 }
+
+void Matrix::operator=(Matrix m2)
+{
+    strin tempStr = m2.getFichier();
+    char *fichier = new char[tempStr.length()+1];
+    strcpy(fichier,tempStr.c_str());
+
+    remove(matrice);
+
+    matrice = fichier;
+    ifstream m(matrice,ifstream::in);
+    string ligne;
+    getline(m,ligne);
+    nLigne=atoi((ligne.substr(0,ligne.find_first_of(' ')).c_str()));
+    nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
+}
+
+void Matrix::produit(int a, char *new_fichier)
+{
+    ofstream fichier_produit(new_fichier);
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);//saut de la ligne des dimensions
+
+    while(!m.eof())
+    {
+        getline(m,ligne);
+        setV(ligne,getV(ligne)*2);
+        fichier_produit<<ligne<<endl;
+    }
+}
+
+/*void Matrix::produit(int a)
+{
+    ofstream fichier_produit("temp_produit.txt");
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);//saut de la ligne des dimensions
+
+    while(!m.eof())
+    {
+        getline(m,ligne);
+        setV(ligne,getV(ligne)*2);
+        fichier_produit<<ligne<<endl;
+    }
+
+
+}*/
+
