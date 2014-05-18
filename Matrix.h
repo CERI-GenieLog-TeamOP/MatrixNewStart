@@ -2,7 +2,7 @@
 #define MATRIX_H
 
 #include <iostream>
-#include <string>
+#include <string.h>
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
@@ -23,6 +23,8 @@ public:
     int getC(string ligne);
     int getV(string ligne);
     void setV(string &ligne, int V);
+
+    void operator=(Matrix m2);
 
     void produit(int a, char *new_fichier);
     void produit(int a);

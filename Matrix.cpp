@@ -70,13 +70,15 @@ void Matrix::setV(string &ligne, int V) //change la valeur d'une ligne, qui devi
 
 void Matrix::operator=(Matrix m2)
 {
-    strin tempStr = m2.getFichier();
-    char *fichier = new char[tempStr.length()+1];
-    strcpy(fichier,tempStr.c_str());
-
     remove(matrice);
 
+    string tempStr = m2.matrice;
+    char *fichier = new char[tempStr.length()];
+    strcpy(fichier,tempStr.c_str());
+
+    delete[] matrice;
     matrice = fichier;
+
     ifstream m(matrice,ifstream::in);
     string ligne;
     getline(m,ligne);
@@ -100,7 +102,7 @@ void Matrix::produit(int a, char *new_fichier)
     }
 }
 
-/*void Matrix::produit(int a)
+void Matrix::produit(int a)
 {
     ofstream fichier_produit("temp_produit.txt");
 
@@ -115,6 +117,7 @@ void Matrix::produit(int a, char *new_fichier)
         fichier_produit<<ligne<<endl;
     }
 
-
-}*/
+    if(remove(matrice)!=0) cerr<<"Erreur: "<<matrice<<" n'a pas pu etre supprime.";
+    rename("temp_produit.txt",matrice);
+}
 
