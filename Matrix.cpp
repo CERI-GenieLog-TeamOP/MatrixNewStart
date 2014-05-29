@@ -287,23 +287,6 @@ bool Matrix::soustraction(Matrix m2, char *new_fichier)
     return true;
 }
 
-void Matrix::addition(Matrix m, char *fichier_destination)
-{
-    ofstream fichier_produit(fichier_destination);
-
-    ifstream m(matrice);
-    string ligne;
-    getline(m,ligne);//saut de la ligne des dimensions
-
-    while(!m.eof())
-    {
-        getline(m,ligne);
-        setV(ligne,getV(ligne)*2);
-        fichier_produit<<ligne<<endl;
-    }
-}
-
-
 bool Matrix::produit(Matrix m2, char * fichier_destination)
 {
     int calcul(0), tmp(0);

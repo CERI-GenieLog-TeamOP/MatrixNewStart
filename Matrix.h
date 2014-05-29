@@ -189,6 +189,8 @@ public:
      *  \warning Le fichier de destination sera écrasé si il existe déjà !
      */
     bool produit(Matrix m2, char *fichier_destination);
+    bool addition(Matrix m2, char *new_fichier);
+    bool soustraction(Matrix m2, char *new_fichier);
 
     /*!
      *  \brief Transposition
