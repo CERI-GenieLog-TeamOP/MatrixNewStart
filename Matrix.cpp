@@ -16,18 +16,13 @@ using namespace std;
 
 Matrix::Matrix (char * fichier)
 {
-    cout<<"CONSTRUCTOR"<<endl;
     matrice = fichier;
-    cout<<"CONSTRUCTOR1"<<endl;
 
     ifstream m (matrice,ifstream::in);
     string ligne;
-    cout<<"CONSTRUCTOR2"<<endl;
     getline(m,ligne);
     nLigne=atoi((ligne.substr(0,ligne.find_first_of(' ')).c_str()));
-    cout<<"CONSTRUCTOR3"<<endl;
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
-    cout<<"CONSTRUCTOR4"<<endl;
     m.close();
 }
 
