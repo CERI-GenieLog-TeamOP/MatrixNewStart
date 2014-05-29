@@ -16,13 +16,18 @@ using namespace std;
 
 Matrix::Matrix (char * fichier)
 {
+    cout<<"CONSTRUCTOR"<<endl;
     matrice = fichier;
+    cout<<"CONSTRUCTOR1"<<endl;
 
     ifstream m (matrice,ifstream::in);
     string ligne;
+    cout<<"CONSTRUCTOR2"<<endl;
     getline(m,ligne);
     nLigne=atoi((ligne.substr(0,ligne.find_first_of(' ')).c_str()));
+    cout<<"CONSTRUCTOR3"<<endl;
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
+    cout<<"CONSTRUCTOR4"<<endl;
     m.close();
 }
 
@@ -138,6 +143,22 @@ void Matrix::soustraction(int a, char *fichier_destination)
         setV(ligne,getV(ligne)-a);
         fichier_produit<<ligne<<endl;
     }
+
+    ifstream registre("registreMatrices.txt");
+    ofstream registreo("registreMatrices.txt", ios::app);
+
+    string check;
+    bool check2(false);
+    while(!registre.eof())
+    {
+        getline(registre, check);
+        if(check == fichier_destination)check2 = true;
+    }
+    if(!check2)registreo << fichier_destination << endl;
+    registre.close();
+    registreo.close();
+
+
     m.close();
     fichier_produit.close();
 }
@@ -178,6 +199,21 @@ void Matrix::addition(int a, char *fichier_destination)
         setV(ligne,getV(ligne)+a);
         fichier_produit<<ligne<<endl;
     }
+
+    ifstream registre("registreMatrices.txt");
+    ofstream registreo("registreMatrices.txt", ios::app);
+
+    string check;
+    bool check2(false);
+    while(!registre.eof())
+    {
+        getline(registre, check);
+        if(check == fichier_destination)check2 = true;
+    }
+    if(!check2)registreo << fichier_destination << endl;
+    registre.close();
+    registreo.close();
+
     m.close();
     fichier_produit.close();
 }
@@ -218,6 +254,22 @@ void Matrix::produit(int a, char *fichier_destination)
         setV(ligne,getV(ligne)*a);
         fichier_produit<<ligne<<endl;
     }
+
+    ifstream registre("registreMatrices.txt");
+    ofstream registreo("registreMatrices.txt", ios::app);
+
+    string check;
+    bool check2(false);
+    while(!registre.eof())
+    {
+        getline(registre, check);
+        if(check == fichier_destination)check2 = true;
+    }
+    if(!check2)registreo << fichier_destination << endl;
+    registre.close();
+    registreo.close();
+
+
     m.close();
     fichier_produit.close();
 }
@@ -243,7 +295,7 @@ void Matrix::produit(int a)
     fichier_produit.close();
 }
 
-bool Matrix::addition(Matrix m2, char *new_fichier)
+bool Matrix::addition(Matrix m2, char *fichier_destination)
 {
     if(m2.getNlignes() != nLigne || m2.getNcolonnes() != nColonne)
     {
@@ -251,7 +303,7 @@ bool Matrix::addition(Matrix m2, char *new_fichier)
         return false;
     }
 
-    ofstream sortie (new_fichier, ios::out | ios::trunc);
+    ofstream sortie (fichier_destination, ios::out | ios::trunc);
     sortie << nLigne << ' ' << nColonne << endl;
 
     for(int idxL = 0 ; idxL < nLigne ; idxL++)
@@ -261,11 +313,27 @@ bool Matrix::addition(Matrix m2, char *new_fichier)
             sortie << idxL << ' ' << idxC << ' ' << get(idxC, idxL) + m2.get(idxC, idxL) << endl;
         }
     }
+
+    ifstream registre("registreMatrices.txt");
+    ofstream registreo("registreMatrices.txt", ios::app);
+
+    string check;
+    bool check2(false);
+    while(!registre.eof())
+    {
+        getline(registre, check);
+        if(check == fichier_destination)check2 = true;
+    }
+    if(!check2)registreo << fichier_destination << endl;
+    registre.close();
+    registreo.close();
+
+
     sortie.close();
     return true;
 }
 
-bool Matrix::soustraction(Matrix m2, char *new_fichier)
+bool Matrix::soustraction(Matrix m2, char *fichier_destination)
 {
     if(m2.getNlignes() != nLigne || m2.getNcolonnes() != nColonne)
     {
@@ -273,7 +341,7 @@ bool Matrix::soustraction(Matrix m2, char *new_fichier)
         return false;
     }
 
-    ofstream sortie (new_fichier, ios::out | ios::trunc);
+    ofstream sortie (fichier_destination, ios::out | ios::trunc);
     sortie << nLigne << ' ' << nColonne << endl;
 
     for(int idxL = 0 ; idxL < nLigne ; idxL++)
@@ -283,6 +351,22 @@ bool Matrix::soustraction(Matrix m2, char *new_fichier)
             sortie << idxL << ' ' << idxC << ' ' << get(idxC, idxL) - m2.get(idxC, idxL) << endl;
         }
     }
+
+    ifstream registre("registreMatrices.txt");
+    ofstream registreo("registreMatrices.txt", ios::app);
+
+    string check;
+    bool check2(false);
+    while(!registre.eof())
+    {
+        getline(registre, check);
+        if(check == fichier_destination)check2 = true;
+    }
+    if(!check2)registreo << fichier_destination << endl;
+    registre.close();
+    registreo.close();
+
+
     sortie.close();
     return true;
 }
@@ -318,6 +402,21 @@ bool Matrix::produit(Matrix m2, char * fichier_destination)
                 }
         }
     }
+
+    ifstream registre("registreMatrices.txt");
+    ofstream registreo("registreMatrices.txt", ios::app);
+
+    string check;
+    bool check2(false);
+    while(!registre.eof())
+    {
+        getline(registre, check);
+        if(check == fichier_destination)check2 = true;
+    }
+    if(!check2)registreo << fichier_destination << endl;
+    registre.close();
+    registreo.close();
+
     sortie.close();
     return true;
 }
@@ -338,6 +437,21 @@ void Matrix::transposee(char * fichier_destination)
             if(get(idxC, idxL) != 0)transpo << idxC << ' ' << idxL << ' ' << get(idxC, idxL) << endl;
         }
     }
+
+    ifstream registre("registreMatrices.txt");
+    ofstream registreo("registreMatrices.txt", ios::app);
+
+    string check;
+    bool check2(false);
+    while(!registre.eof())
+    {
+        getline(registre, check);
+        if(check == fichier_destination)check2 = true;
+    }
+    if(!check2)registreo << fichier_destination << endl;
+    registre.close();
+    registreo.close();
+
     m.close();
     transpo.close();
 }

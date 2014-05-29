@@ -1,6 +1,31 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#ifdef _WIN32
+    #include <windows.h>
+    #define clearE() system("cls")
+#else
+    #ifdef linux
+        #define clearE() system("clear")
+    #else
+
+        #ifndef NBLIGCLS
+            #define NBLIGCLS 30
+        #endif
+
+        void clearE()
+        {
+            int i;
+            for(i = 0; i < NBLIGCLS; i++)
+            {
+                cout<<endl;
+            }
+        }
+    #endif
+
+#endif
+
+
 /*!
  * \file Matrix.h
  * \brief Opérations sur des matrices creuses
