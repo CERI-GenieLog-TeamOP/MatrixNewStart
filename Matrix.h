@@ -178,9 +178,6 @@ public:
     void addition(int a, char *fichier_destination);
     void addition(int a);
 
-    bool addition(Matrix m2, char *new_fichier);
-    bool soustraction(Matrix m2, char *new_fichier);
-
     /*!
      *  \brief Multiplication par une matrice
      *

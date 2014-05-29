@@ -303,6 +303,7 @@ void Matrix::addition(Matrix m, char *fichier_destination)
     }
 }
 
+
 bool Matrix::produit(Matrix m2, char * fichier_destination)
 {
     int calcul(0), tmp(0);
