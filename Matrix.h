@@ -26,8 +26,10 @@ public:
 
     void operator=(Matrix m2);
 
-    void produit(int a, char *new_fichier);
+    void produit(int a, char *fichier_destination);
     void produit(int a);
+    void addition(Matrix m2, char *fichier_destination);
+    void addition(Matrix m2);
 
     //Matrix *produit(int a);
     //Matrix operator*(const int &a);

@@ -59,7 +59,7 @@ int Matrix::getV(string ligne)
     return atoi(v.c_str());
 }
 
-void Matrix::setV(string &ligne, int V) //change la valeur d'une ligne, qui devient V
+void Matrix::setV(string &ligne, int V) //change la valeur d'une ligne récupérée dans un string, qui devient V
 {
     string new_ligne=ligne.substr(0,ligne.find_last_of(' ')+1);
     stringstream ss;
@@ -86,9 +86,9 @@ void Matrix::operator=(Matrix m2)
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
 }
 
-void Matrix::produit(int a, char *new_fichier)
+void Matrix::produit(int a, char *fichier_destination)
 {
-    ofstream fichier_produit(new_fichier);
+    ofstream fichier_produit(fichier_destination);
 
     ifstream m(matrice);
     string ligne;
@@ -119,5 +119,21 @@ void Matrix::produit(int a)
 
     if(remove(matrice)!=0) cerr<<"Erreur: "<<matrice<<" n'a pas pu etre supprime.";
     rename("temp_produit.txt",matrice);
+}
+
+void Matrix::addition(Matrix m, char *fichier_destination)
+{
+    ofstream fichier_produit(fichier_destination);
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);//saut de la ligne des dimensions
+
+    while(!m.eof())
+    {
+        getline(m,ligne);
+        setV(ligne,getV(ligne)*2);
+        fichier_produit<<ligne<<endl;
+    }
 }
 
