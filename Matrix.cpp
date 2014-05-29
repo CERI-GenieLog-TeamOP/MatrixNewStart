@@ -13,6 +13,28 @@ Matrix::Matrix (char * fichier)
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
 }
 
+string Matrix::getStrFichier()
+{
+    string rez(matrice);
+    return rez;
+}
+
+char* Matrix::getFichier()
+{
+    return matrice;
+}
+
+int Matrix::getNlignes()
+{
+    return nLigne;
+}
+
+int Matrix::getNcolonnes()
+{
+    return nColonne;
+}
+
+
 void Matrix::afficher() //pour test petites matrices uniquement
 {
     cout<<"Debut affichage de matrice "<<nLigne<<"*"<<nColonne<<endl;
@@ -20,7 +42,7 @@ void Matrix::afficher() //pour test petites matrices uniquement
     {
         for(int i_c=0;i_c<nColonne;i_c++)
         {
-            cout<<get(i_l,i_c)<<' ';
+            cout<<get(i_c,i_l)<<' ';
         }
         cout<<endl;
     }
@@ -59,7 +81,7 @@ int Matrix::getV(string ligne)
     return atoi(v.c_str());
 }
 
-void Matrix::setV(string &ligne, int V) //change la valeur d'une ligne récupérée dans un string, qui devient V
+void Matrix::setV(string &ligne, int V) //change la valeur d'une ligne rÃ©cupÃ©rÃ©e dans un string, qui devient V
 {
     string new_ligne=ligne.substr(0,ligne.find_last_of(' ')+1);
     stringstream ss;
@@ -137,3 +159,41 @@ void Matrix::addition(Matrix m, char *fichier_destination)
     }
 }
 
+bool Matrix::produit(Matrix m2, char * fichier_destination)
+{
+    int calcul(0), tmp(0);
+    if(nColonne != m2.getNlignes())
+    {
+        cerr << "Les deux matrices ne peuvent pas Ãªtre multipliÃ©es !" << endl;
+        return false;
+    }
+
+    ofstream sortie (new_fichier, ios::out | ios::trunc);
+    ifstream mat1(matrice, ifstream::in);
+    ifstream mat2(getFichier(), ifstream::in);
+
+    sortie << nLigne << ' ' << m2.getNcolonnes() << endl;
+
+    for(int i = 0 ; i < nLigne ; i++)
+    {
+        for(int idxCol = 0 ; idxCol < m2.getNcolonnes() ; idxCol++)
+        {
+                calcul = 0;
+                for(int idx1 = 0 ; idx1 < nColonne ; idx1++)
+                {
+                     if(get(idx1, i) != 0 && m2.get(idxCol, idx1) != 0)
+                     {
+                        calcul += get(idx1, i) * m2.get(idxCol, idx1);
+                     }
+                }
+                if(calcul != 0)
+                {
+                    cout<<"Brackett"<<endl;
+                    sortie << i << ' ' << idxCol << ' ' << calcul << endl;
+                }
+        }
+    }
+
+
+    return true;
+}
