@@ -141,7 +141,6 @@ public:
      */
     void operator=(Matrix m2);
 
-<<<<<<< HEAD
     /*!
      *  \brief Multiplication par un entier
      *
@@ -162,8 +161,19 @@ public:
      *  \param a : entier multiplicateur
      */
 	void produit(int a);
-	
-    void soustraction(int a, char *new_fichier);
+
+    /*!
+     *  \brief Soustraction par un entier
+     *
+     *  Soustrait à la matrice l'entier passé en paramètre et stocke le résultat dans un fichier.
+     *  La matrice appelante n'est pas modifiée.
+     *
+     *  \param a : entier à soustraire
+     *  \param fichier_destination : chaîne de caractère désignant un fichier texte, déjà existant ou non, dans lequel le résultat sera stocké
+     *  \warning Le fichier de destination sera écrasé si il existe déjà !
+     */
+    void soustraction(int a, char *fichier_destination);
+
     void soustraction(int a);
     void addition(int a, char *fichier_destination);
     void addition(int a);
@@ -180,7 +190,16 @@ public:
      */
     bool produit(Matrix m2, char *fichier_destination);
 
-    void transposee(char* new_fichier);
+    /*!
+     *  \brief Transposition
+     *
+     *  Transpose la matrice appelante dans un autre fichier.
+     *  La matrice appelante n'est pas modifiée.
+     *
+     *  \param fichier_destination : chaîne de caractère désignant un fichier texte, déjà existant ou non, dans lequel le résultat sera stocké
+     *  \warning Le fichier de destination sera écrasé si il existe déjà !
+     */
+    void transposee(char* fichier_destination);
 
     //Matrix *produit(int a);
     //Matrix operator*(const int &a);

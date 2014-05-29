@@ -1,5 +1,17 @@
 #include "Matrix.h"
 
+/*!
+ * \file Matrix.cpp
+ * \brief Opérations sur des matrices creuses
+ *
+ * \author Dupuy Nicolas
+ * \author Cartoux Tristan
+ * \author Soubirou Clément
+ * \author Merah Vincent
+ *
+ * \date 29/05/2014
+ */
+
 using namespace std;
 
 Matrix::Matrix (char * fichier)
@@ -108,9 +120,9 @@ void Matrix::operator=(Matrix m2)
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
 }
 
-void Matrix::soustraction(int a, char *new_fichier)
+void Matrix::soustraction(int a, char *fichier_destination)
 {
-    ofstream fichier_produit(new_fichier);
+    ofstream fichier_produit(fichier_destination);
 
     ifstream m(matrice);
     string ligne;
@@ -144,9 +156,9 @@ void Matrix::soustraction(int a)
     rename("temp_produit.txt",matrice);
 }
 
-void Matrix::addition(int a, char *new_fichier)
+void Matrix::addition(int a, char *fichier_destination)
 {
-    ofstream fichier_produit(new_fichier);
+    ofstream fichier_produit(fichier_destination);
 
     ifstream m(matrice);
     string ligne;
@@ -241,7 +253,7 @@ bool Matrix::produit(Matrix m2, char * fichier_destination)
         return false;
     }
 
-    ofstream sortie (new_fichier, ios::out | ios::trunc);
+    ofstream sortie (fichier_destination, ios::out | ios::trunc);
 
     sortie << nLigne << ' ' << m2.getNcolonnes() << endl;
 
@@ -266,9 +278,9 @@ bool Matrix::produit(Matrix m2, char * fichier_destination)
     return true;
 }
 
-void Matrix::transposee(char * new_fichier)
+void Matrix::transposee(char * fichier_destination)
 {
-    ofstream transpo(new_fichier);
+    ofstream transpo(fichier_destination);
 
     ifstream m(matrice);
     string ligne;
