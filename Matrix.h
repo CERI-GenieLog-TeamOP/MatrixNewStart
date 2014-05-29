@@ -17,6 +17,11 @@ class Matrix
 
 public:
     Matrix(char * fichier);
+    string getStrFichier();
+    char* getFichier();
+    int getNlignes();
+    int getNcolonnes();
+
     void afficher();
     int get(int l, int c);
     int getL(string ligne);

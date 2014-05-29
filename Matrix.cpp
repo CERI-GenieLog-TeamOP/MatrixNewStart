@@ -13,6 +13,28 @@ Matrix::Matrix (char * fichier)
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
 }
 
+string Matrix::getStrFichier()
+{
+    string rez(matrice);
+    return rez;
+}
+
+char* Matrix::getFichier()
+{
+    return matrice;
+}
+
+int Matrix::getNlignes()
+{
+    return nLigne;
+}
+
+int Matrix::getNcolonnes()
+{
+    return nColonne;
+}
+
+
 void Matrix::afficher() //pour test petites matrices uniquement
 {
     cout<<"Debut affichage de matrice "<<nLigne<<"*"<<nColonne<<endl;
@@ -20,7 +42,7 @@ void Matrix::afficher() //pour test petites matrices uniquement
     {
         for(int i_c=0;i_c<nColonne;i_c++)
         {
-            cout<<get(i_l,i_c)<<' ';
+            cout<<get(i_c,i_l)<<' ';
         }
         cout<<endl;
     }
