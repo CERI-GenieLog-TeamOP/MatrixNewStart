@@ -8,7 +8,7 @@ int main ()
     Matrix m1("mtest1.txt");
     m1.afficher();
 
-    Matrix m2("mtest2.txt");    //On crée les deux matrices.
+    Matrix m2("mtest2.txt");    //On crÃ©e les deux matrices.
     m2.afficher();
 
     cout<<endl<<endl;

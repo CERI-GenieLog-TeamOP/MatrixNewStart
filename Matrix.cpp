@@ -1,5 +1,17 @@
 #include "Matrix.h"
 
+/*!
+ * \file Matrix.cpp
+ * \brief Opérations sur des matrices creuses
+ *
+ * \author Dupuy Nicolas
+ * \author Cartoux Tristan
+ * \author Soubirou Clément
+ * \author Merah Vincent
+ *
+ * \date 29/05/2014
+ */
+
 using namespace std;
 
 Matrix::Matrix (char * fichier)
@@ -11,6 +23,7 @@ Matrix::Matrix (char * fichier)
     getline(m,ligne);
     nLigne=atoi((ligne.substr(0,ligne.find_first_of(' ')).c_str()));
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
+    m.close();
 }
 
 string Matrix::getStrFichier()
@@ -61,6 +74,7 @@ int Matrix::get(int c, int l)
 
     if(getL(ligne)!=l || getC(ligne)!=c) return 0;
     return getV(ligne);
+    m.close();
 }
 
 int Matrix::getL(string ligne)
@@ -81,7 +95,7 @@ int Matrix::getV(string ligne)
     return atoi(v.c_str());
 }
 
-void Matrix::setV(string &ligne, int V) //change la valeur d'une ligne, qui devient V
+void Matrix::setV(string &ligne, int V) //change la valeur d'une ligne récupérée dans un string, qui devient V
 {
     string new_ligne=ligne.substr(0,ligne.find_last_of(' ')+1);
     stringstream ss;
@@ -106,11 +120,12 @@ void Matrix::operator=(Matrix m2)
     getline(m,ligne);
     nLigne=atoi((ligne.substr(0,ligne.find_first_of(' ')).c_str()));
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
+    m.close();
 }
 
-void Matrix::soustraction(int a, char *new_fichier)
+void Matrix::soustraction(int a, char *fichier_destination)
 {
-    ofstream fichier_produit(new_fichier);
+    ofstream fichier_produit(fichier_destination);
 
     ifstream m(matrice);
     string ligne;
@@ -123,6 +138,8 @@ void Matrix::soustraction(int a, char *new_fichier)
         setV(ligne,getV(ligne)-a);
         fichier_produit<<ligne<<endl;
     }
+    m.close();
+    fichier_produit.close();
 }
 
 void Matrix::soustraction(int a)
@@ -142,11 +159,13 @@ void Matrix::soustraction(int a)
 
     if(remove(matrice)!=0) cerr<<"Erreur: "<<matrice<<" n'a pas pu etre supprime.";
     rename("temp_produit.txt",matrice);
+    m.close();
+    fichier_produit.close();
 }
 
-void Matrix::addition(int a, char *new_fichier)
+void Matrix::addition(int a, char *fichier_destination)
 {
-    ofstream fichier_produit(new_fichier);
+    ofstream fichier_produit(fichier_destination);
 
     ifstream m(matrice);
     string ligne;
@@ -159,6 +178,8 @@ void Matrix::addition(int a, char *new_fichier)
         setV(ligne,getV(ligne)+a);
         fichier_produit<<ligne<<endl;
     }
+    m.close();
+    fichier_produit.close();
 }
 
 void Matrix::addition(int a)
@@ -178,11 +199,13 @@ void Matrix::addition(int a)
 
     if(remove(matrice)!=0) cerr<<"Erreur: "<<matrice<<" n'a pas pu etre supprime.";
     rename("temp_produit.txt",matrice);
+    m.close();
+    fichier_produit.close();
 }
 
-void Matrix::produit(int a, char *new_fichier)
+void Matrix::produit(int a, char *fichier_destination)
 {
-    ofstream fichier_produit(new_fichier);
+    ofstream fichier_produit(fichier_destination);
 
     ifstream m(matrice);
     string ligne;
@@ -195,6 +218,8 @@ void Matrix::produit(int a, char *new_fichier)
         setV(ligne,getV(ligne)*a);
         fichier_produit<<ligne<<endl;
     }
+    m.close();
+    fichier_produit.close();
 }
 
 void Matrix::produit(int a)
@@ -214,18 +239,80 @@ void Matrix::produit(int a)
 
     if(remove(matrice)!=0) cerr<<"Erreur: "<<matrice<<" n'a pas pu etre supprime.";
     rename("temp_produit.txt",matrice);
+    m.close();
+    fichier_produit.close();
 }
 
-bool Matrix::produit(Matrix m2, char * new_fichier)
+bool Matrix::addition(Matrix m2, char *new_fichier)
 {
-    int calcul(0), tmp(0);
-    if(nColonne != m2.getNlignes())
+    if(m2.getNlignes() != nLigne || m2.getNcolonnes() != nColonne)
     {
-        cerr << "Les deux matrices ne peut pas �tre multipli�es !" << endl;
+        cerr << "Impossible d'additionner deux matrices de tailles differentes." << endl;
         return false;
     }
 
     ofstream sortie (new_fichier, ios::out | ios::trunc);
+    sortie << nLigne << ' ' << nColonne << endl;
+
+    for(int idxL = 0 ; idxL < nLigne ; idxL++)
+    {
+        for(int idxC = 0 ; idxC < nColonne ; idxC++)
+        {
+            sortie << idxL << ' ' << idxC << ' ' << get(idxC, idxL) + m2.get(idxC, idxL) << endl;
+        }
+    }
+    sortie.close();
+    return true;
+}
+
+bool Matrix::soustraction(Matrix m2, char *new_fichier)
+{
+    if(m2.getNlignes() != nLigne || m2.getNcolonnes() != nColonne)
+    {
+        cerr << "Impossible d'additionner deux matrices de tailles differentes." << endl;
+        return false;
+    }
+
+    ofstream sortie (new_fichier, ios::out | ios::trunc);
+    sortie << nLigne << ' ' << nColonne << endl;
+
+    for(int idxL = 0 ; idxL < nLigne ; idxL++)
+    {
+        for(int idxC = 0 ; idxC < nColonne ; idxC++)
+        {
+            sortie << idxL << ' ' << idxC << ' ' << get(idxC, idxL) - m2.get(idxC, idxL) << endl;
+        }
+    }
+    sortie.close();
+    return true;
+}
+
+void Matrix::addition(Matrix m, char *fichier_destination)
+{
+    ofstream fichier_produit(fichier_destination);
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);//saut de la ligne des dimensions
+
+    while(!m.eof())
+    {
+        getline(m,ligne);
+        setV(ligne,getV(ligne)*2);
+        fichier_produit<<ligne<<endl;
+    }
+}
+
+bool Matrix::produit(Matrix m2, char * fichier_destination)
+{
+    int calcul(0), tmp(0);
+    if(nColonne != m2.getNlignes())
+    {
+        cerr << "Les deux matrices ne peuvent pas être multipliées !" << endl;
+        return false;
+    }
+
+    ofstream sortie (fichier_destination, ios::out | ios::trunc);
 
     sortie << nLigne << ' ' << m2.getNcolonnes() << endl;
 
@@ -247,12 +334,13 @@ bool Matrix::produit(Matrix m2, char * new_fichier)
                 }
         }
     }
+    sortie.close();
     return true;
 }
 
-void Matrix::transposee(char * new_fichier)
+void Matrix::transposee(char * fichier_destination)
 {
-    ofstream transpo(new_fichier);
+    ofstream transpo(fichier_destination);
 
     ifstream m(matrice);
     string ligne;
@@ -266,4 +354,6 @@ void Matrix::transposee(char * new_fichier)
             if(get(idxC, idxL) != 0)transpo << idxC << ' ' << idxL << ' ' << get(idxC, idxL) << endl;
         }
     }
+    m.close();
+    transpo.close();
 }
