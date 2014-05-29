@@ -121,3 +121,41 @@ void Matrix::produit(int a)
     rename("temp_produit.txt",matrice);
 }
 
+bool Matrix::produit(Matrix m2, char * new_fichier)
+{
+    int calcul(0), tmp(0);
+    if(nColonne != m2.getNlignes())
+    {
+        cerr << "Les deux matrices ne peut pas être multipliées !" << endl;
+        return false;
+    }
+
+    ofstream sortie (new_fichier, ios::out | ios::trunc);
+    ifstream mat1(matrice, ifstream::in);
+    ifstream mat2(getFichier(), ifstream::in);
+
+    sortie << nLigne << ' ' << m2.getNcolonnes() << endl;
+
+    for(int i = 0 ; i < nLigne ; i++)
+    {
+        for(int idxCol = 0 ; idxCol < m2.getNcolonnes() ; idxCol++)
+        {
+                calcul = 0;
+                for(int idx1 = 0 ; idx1 < nColonne ; idx1++)
+                {
+                     if(get(idx1, i) != 0 && m2.get(idxCol, idx1) != 0)
+                     {
+                        calcul += get(idx1, i) * m2.get(idxCol, idx1);
+                     }
+                }
+                if(calcul != 0)
+                {
+                    cout<<"Brackett"<<endl;
+                    sortie << i << ' ' << idxCol << ' ' << calcul << endl;
+                }
+        }
+    }
+
+
+    return true;
+}

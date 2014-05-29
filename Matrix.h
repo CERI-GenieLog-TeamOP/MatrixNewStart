@@ -29,6 +29,8 @@ public:
     void produit(int a, char *new_fichier);
     void produit(int a);
 
+    bool produit(Matrix m2, char *);
+
     //Matrix *produit(int a);
     //Matrix operator*(const int &a);
 
