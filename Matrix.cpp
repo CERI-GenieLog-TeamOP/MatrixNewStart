@@ -108,9 +108,26 @@ void Matrix::operator=(Matrix m2)
     nColonne=atoi((ligne.substr(ligne.find_first_of(' ')+1,string::npos).c_str()));
 }
 
-void Matrix::produit(int a, char *new_fichier)
+void Matrix::soustraction(int a, char *new_fichier)
 {
     ofstream fichier_produit(new_fichier);
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);//saut de la ligne des dimensions
+    fichier_produit<<ligne<<endl;
+
+    while(!m.eof())
+    {
+        getline(m,ligne);
+        setV(ligne,getV(ligne)-a);
+        fichier_produit<<ligne<<endl;
+    }
+}
+
+void Matrix::soustraction(int a)
+{
+    ofstream fichier_produit("temp_produit.txt");
 
     ifstream m(matrice);
     string ligne;
@@ -119,7 +136,63 @@ void Matrix::produit(int a, char *new_fichier)
     while(!m.eof())
     {
         getline(m,ligne);
-        setV(ligne,getV(ligne)*2);
+        setV(ligne,getV(ligne)-a);
+        fichier_produit<<ligne<<endl;
+    }
+
+    if(remove(matrice)!=0) cerr<<"Erreur: "<<matrice<<" n'a pas pu etre supprime.";
+    rename("temp_produit.txt",matrice);
+}
+
+void Matrix::addition(int a, char *new_fichier)
+{
+    ofstream fichier_produit(new_fichier);
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);//saut de la ligne des dimensions
+    fichier_produit<<ligne<<endl;
+
+    while(!m.eof())
+    {
+        getline(m,ligne);
+        setV(ligne,getV(ligne)+a);
+        fichier_produit<<ligne<<endl;
+    }
+}
+
+void Matrix::addition(int a)
+{
+    ofstream fichier_produit("temp_produit.txt");
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);//saut de la ligne des dimensions
+
+    while(!m.eof())
+    {
+        getline(m,ligne);
+        setV(ligne,getV(ligne)+a);
+        fichier_produit<<ligne<<endl;
+    }
+
+    if(remove(matrice)!=0) cerr<<"Erreur: "<<matrice<<" n'a pas pu etre supprime.";
+    rename("temp_produit.txt",matrice);
+}
+
+void Matrix::produit(int a, char *new_fichier)
+{
+    ofstream fichier_produit(new_fichier);
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);//saut de la ligne des dimensions
+    fichier_produit<<ligne<<endl;
+
+    while(!m.eof())
+    {
+        getline(m,ligne);
+        setV(ligne,getV(ligne)*a);
         fichier_produit<<ligne<<endl;
     }
 }
@@ -153,8 +226,6 @@ bool Matrix::produit(Matrix m2, char * new_fichier)
     }
 
     ofstream sortie (new_fichier, ios::out | ios::trunc);
-    ifstream mat1(matrice, ifstream::in);
-    ifstream mat2(getFichier(), ifstream::in);
 
     sortie << nLigne << ' ' << m2.getNcolonnes() << endl;
 
@@ -172,12 +243,27 @@ bool Matrix::produit(Matrix m2, char * new_fichier)
                 }
                 if(calcul != 0)
                 {
-                    cout<<"Brackett"<<endl;
                     sortie << i << ' ' << idxCol << ' ' << calcul << endl;
                 }
         }
     }
-
-
     return true;
+}
+
+void Matrix::transposee(char * new_fichier)
+{
+    ofstream transpo(new_fichier);
+
+    ifstream m(matrice);
+    string ligne;
+    getline(m,ligne);
+    transpo << getC(ligne) << ' ' << getL(ligne) << endl;
+
+    for(int idxC = 0 ; idxC < nColonne ; idxC++)
+    {
+        for(int idxL = 0 ; idxL < nLigne ; idxL++)
+        {
+            if(get(idxC, idxL) != 0)transpo << idxC << ' ' << idxL << ' ' << get(idxC, idxL) << endl;
+        }
+    }
 }
