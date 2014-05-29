@@ -141,6 +141,7 @@ public:
      */
     void operator=(Matrix m2);
 
+<<<<<<< HEAD
     /*!
      *  \brief Multiplication par un entier
      *
@@ -160,9 +161,12 @@ public:
      *
      *  \param a : entier multiplicateur
      */
-    void produit(int a);
-    void addition(Matrix m2, char *fichier_destination);
-    void addition(Matrix m2);
+	void produit(int a);
+	
+    void soustraction(int a, char *new_fichier);
+    void soustraction(int a);
+    void addition(int a, char *fichier_destination);
+    void addition(int a);
 
     /*!
      *  \brief Multiplication par une matrice
@@ -175,6 +179,8 @@ public:
      *  \warning Le fichier de destination sera écrasé si il existe déjà !
      */
     bool produit(Matrix m2, char *fichier_destination);
+
+    void transposee(char* new_fichier);
 
     //Matrix *produit(int a);
     //Matrix operator*(const int &a);

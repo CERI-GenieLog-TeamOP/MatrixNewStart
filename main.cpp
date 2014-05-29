@@ -5,8 +5,6 @@ using namespace std;
 
 int main ()
 {
-
-
     Matrix m1("mtest1.txt");
     m1.afficher();
 
@@ -19,6 +17,14 @@ int main ()
 
     Matrix m3("resultat.txt");      //On affiche le resultat.
     m3.afficher();
+
+    m3.soustraction(1, "testsous.txt");
+    m3.addition(1, "testadd.txt");
+
+    m3.transposee("testtranspo.txt");
+
+    Matrix m4("testtranspo.txt");      //On affiche le resultat.
+    m4.afficher();
 
     //m1.produit(2,"test_produit.txt"); //multiplie m1 par 2 dans un nouveau fichier
     //m1.produit(2); //remplace m1
